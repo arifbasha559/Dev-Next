@@ -5,6 +5,7 @@ export interface IUser extends Document {
   email: string
   password: string
   name: string
+  username: string
   role: "admin" | "user"
   createdAt: Date
   updatedAt: Date
@@ -32,6 +33,13 @@ const UserSchema = new Schema<IUser>(
       required: [true, "Name is required"],
       trim: true,
       maxlength: [50, "Name cannot be more than 50 characters"],
+    },
+    username: {
+      type: String,
+      unique: true,
+      required: [true, "Username is required"],
+      trim: true,
+      maxlength: [50, "Username cannot be more than 50 characters"],
     },
     role: {
       type: String,

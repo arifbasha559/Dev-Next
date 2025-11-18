@@ -182,7 +182,7 @@ export default function BlogPostPage({ params }: any) {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {relatedPost.slice(0, 4).map((post:object) => (
                   post._id !== params.id && (
-                    <Link key={post.id} href={{pathname:`/blog/${post._id}`, query: {from: `/blog/${params.id}` } }}>
+                    <Link key={post._id} href={{pathname:`/blog/${post._id}`, query: {from: `/blog/${params.id}` } }}>
                       <Card className="glass border-gray-800 hover-glow cursor-pointer group">
                         <div className="relative h-48">
                           <Image

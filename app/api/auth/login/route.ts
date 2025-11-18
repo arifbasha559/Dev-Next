@@ -1,40 +1,47 @@
-import type { NextRequest } from "next/server"
-import connectDB from "@/lib/mongodb"
-import User from "@/models/User"
-import { generateToken } from "@/lib/auth"
-import { successResponse, errorResponse, handleApiError, validateRequiredFields } from "@/lib/utils/api"
+import type { NextRequest } from "next/server";
+import connectDB from "@/lib/mongodb";
+import User from "@/models/User";
+import { generateToken } from "@/lib/auth";
+import {
+  successResponse,
+  errorResponse,
+  handleApiError,
+  validateRequiredFields,
+} from "@/lib/utils/api";
 
 export async function POST(request: NextRequest) {
   try {
-    await connectDB()
+    await connectDB();
 
-    const body = await request.json()
-    const { email, password } = body
+    const body = await request.json();
+    const { email, password } = body;
 
     // Validate required fields
-    const validationError = validateRequiredFields(body, ["email", "password"])
+    const validationError = validateRequiredFields(body, ["email", "password"]);
     if (validationError) {
-      return errorResponse(validationError, 400)
+      return errorResponse(validationError, 400);
     }
 
     // Find user and include password for comparison
-    const user = await User.findOne({ email }).select("+password")
+    const user = await User.findOne({ email }).select("+password +username");
     if (!user) {
-      return errorResponse("Invalid credentials", 401)
+      return errorResponse("Invalid credentials", 401);
     }
-
+    console.log("DB username:", user.username);
+    console.log("Object keys:", Object.keys(user.toObject()));
     // Check password
-    const isPasswordValid = await user.comparePassword(password)
+    const isPasswordValid = await user.comparePassword(password);
     if (!isPasswordValid) {
-      return errorResponse("Invalid credentials", 401)
+      return errorResponse("Invalid credentials", 401);
     }
 
     // Generate JWT token
     const token = generateToken({
       userId: user._id.toString(),
       email: user.email,
+      username: user.username,
       role: user.role,
-    })
+    });
 
     return successResponse(
       {
@@ -43,12 +50,14 @@ export async function POST(request: NextRequest) {
           id: user._id,
           email: user.email,
           name: user.name,
+          username: user.username,
           role: user.role,
         },
       },
-      "Login successful",
-    )
+      "Login successful"
+    );
   } catch (error) {
-    return handleApiError(error)
+    return handleApiError(error);
   }
 }
+

@@ -2,16 +2,17 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Search, Menu, X, Bug } from "lucide-react";
+import { Search, Menu, X, Bug, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  
+  const [token, setToken] = useState<any>(null);
   useEffect(() => {
+    setToken(encodeURIComponent(localStorage.getItem("username")));
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
@@ -26,11 +27,10 @@ export default function Navbar() {
     { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },
   ];
-
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-          scrolled
+        scrolled
           ? " backdrop-blur-xl  shadow-2xl shadow-black/20"
           : "bg-transparent"
       }`}
@@ -65,35 +65,21 @@ export default function Navbar() {
           {/* Search and Mobile Menu */}
           <div className="flex items-center space-x-4">
             {/* Search */}
-            <div className="relative">
-              {isSearchOpen ? (
-                <div className="flex items-center space-x-2 fade-in">
-                  <Input
-                    type="text"
-                    placeholder="Search posts..."
-                    className="w-64 absolute -bottom-16 right-0 bg-gray-900/70 border-gray-600 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-300 backdrop-blur-sm"
-                    autoFocus
-                  />
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setIsSearchOpen(false)}
-                    className="text-gray-400 hover:text-white hover:bg-red-500/20 hover:border-red-500/30 transition-all duration-300"
-                  >
-                    <X className="w-4 h-4" />
-                  </Button>
-                </div>
-              ) : (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setIsSearchOpen(true)}
-                  className="text-gray-400 hover:text-white hover:bg-blue-500/20 hover:border-blue-500/30 transition-all duration-300 hover:scale-110"
-                >
-                  <Search className="w-5 h-5" />
-                </Button>
-              )}
-            </div>
+            <div className="relative"></div>
+            <Link href={!token ? "/auth/login/" : `/profile/${token}`}>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-gray-400 bg-blue-700 hover:text-white hover:bg-blue-500/20 hover:border-blue-500/30 transition-all duration-300 hover:scale-110"
+              >
+                <Avatar className=" border-none">
+                  <AvatarImage src={token?.profileImage || ""} />
+                  <AvatarFallback className=" text-white text-lg">
+                    {token?.charAt(0).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+              </Button>
+            </Link>
 
             {/* Mobile Menu Button */}
             <Button

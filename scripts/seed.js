@@ -3,8 +3,6 @@ import User from "../models/User.ts"
 import Category from "../models/Category.ts"
 import Post from "../models/Post.ts"
 
-const MONGODB_URI = process.env.MONGODB_URI
-
 async function seedDatabase() {
   try {
     await mongoose.connect("mongodb+srv://Arif9087:Arif%409087@cluster0.bfhwfuz.mongodb.net/devnext?retryWrites=true&w=majority&appName=Cluster0")
@@ -21,6 +19,7 @@ async function seedDatabase() {
       email: "admin@techzen.com",
       password: "admin123",
       name: "Arif Basha",
+      username: "arif@123",
       role: "admin",
     })
     console.log("Created admin user")

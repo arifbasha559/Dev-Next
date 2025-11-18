@@ -8,6 +8,7 @@ export interface ICategory extends Document {
   postCount: number
   createdAt: Date
   updatedAt: Date
+  icon: string
 }
 
 const CategorySchema = new Schema<ICategory>(
@@ -33,6 +34,10 @@ const CategorySchema = new Schema<ICategory>(
     color: {
       type: String,
       default: "from-blue-400 to-blue-600",
+    },
+    icon: {
+      type: String,
+      default: "ChartBarStacked",
     },
     postCount: {
       type: Number,

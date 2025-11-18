@@ -1,66 +1,95 @@
-import Image from "next/image"
-import Link from "next/link"
-import { Mail, Github, Linkedin, Twitter, Code, Coffee, Lightbulb } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import {
+  Mail,
+  Github,
+  Linkedin,
+  Twitter,
+  Code,
+  Coffee,
+  Lightbulb,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { useState } from "react";
+import { useEffect } from "react";
 
 export default function AboutPage() {
-  const skills = [
-    "JavaScript & TypeScript",
-    "React & Next.js",
-    "Node.js & Express",
-    "Python & AI/ML",
-    "Cloud Computing",
-    "DevOps & CI/CD",
-  ]
-
+  const [tags, setTags] = useState([]);
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        const response = await fetch("/api/tags");
+        const data = await response.json();
+        console.log("Fetched tags data:", data);
+        setTags(data.data);
+      } catch (error) {
+        console.error("Error fetching tags:", error);
+      }
+    };
+    fetchTags();
+  }, []);
   const passions = [
     {
       icon: Code,
       title: "Clean Code",
-      description: "Writing maintainable, scalable, and efficient code that stands the test of time.",
+      description:
+        "Writing maintainable, scalable, and efficient code that stands the test of time.",
     },
     {
       icon: Lightbulb,
       title: "Innovation",
-      description: "Exploring cutting-edge technologies and finding creative solutions to complex problems.",
+      description:
+        "Exploring cutting-edge technologies and finding creative solutions to complex problems.",
     },
     {
       icon: Coffee,
       title: "Learning",
-      description: "Continuously expanding knowledge and sharing insights with the developer community.",
+      description:
+        "Continuously expanding knowledge and sharing insights with the developer community.",
     },
-  ]
+  ];
 
   return (
     <div className="pt-24 pb-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16 fade-in">
-          <h1 className="text-4xl md:text-5xl font-orbitron font-bold mb-4 gradient-text">About DevNext</h1>
+          <h1 className="text-4xl md:text-5xl font-orbitron font-bold mb-4 gradient-text">
+            About DevNext
+          </h1>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Where technology meets tranquility, and complex concepts become clear
+            Where technology meets tranquility, and complex concepts become
+            clear
           </p>
         </div>
 
         {/* Author Section */}
         <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
           <div className="order-2 md:order-1">
-            <h2 className="text-3xl font-orbitron font-bold mb-6 text-white">Meet the Author</h2>
+            <h2 className="text-3xl font-orbitron font-bold mb-6 text-white">
+              Meet the Author
+            </h2>
             <div className="space-y-4 text-justify text-gray-300 leading-relaxed">
               <p>
-                Hi, I'm <span className="text-blue-400 font-semibold">Arif Basha</span>, a passionate software developer
-                and technology enthusiast. I created DevNext as a space to share insights, tutorials, and thoughts
-                about the ever-evolving world of technology.
+                Hi, I'm{" "}
+                <span className="text-blue-400 font-semibold">Arif Basha</span>,
+                a passionate software developer and technology enthusiast. I
+                created DevNext as a space to share insights, tutorials, and
+                thoughts about the ever-evolving world of technology.
               </p>
               <p>
-                With years of experience in full-stack development, I've worked with startups and enterprises, building
-                scalable applications and leading development teams. My journey spans across various technologies, from
-                frontend frameworks to cloud architecture.
+                With years of experience in full-stack development, I've worked
+                with startups and enterprises, building scalable applications
+                and leading development teams. My journey spans across various
+                technologies, from frontend frameworks to cloud architecture.
               </p>
               <p>
-                When I'm not coding, you'll find me exploring new technologies, contributing to open-source projects, or
-                writing about the latest trends in software development.
+                When I'm not coding, you'll find me exploring new technologies,
+                contributing to open-source projects, or writing about the
+                latest trends in software development.
               </p>
             </div>
 
@@ -83,7 +112,10 @@ export default function AboutPage() {
                 asChild
                 className="border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white bg-transparent"
               >
-                <Link href="https://www.linkedin.com/in/arifbasha559" target="_blank">
+                <Link
+                  href="https://www.linkedin.com/in/arifbasha559"
+                  target="_blank"
+                >
                   <Linkedin className="w-4 h-4 mr-2" />
                   LinkedIn
                 </Link>
@@ -121,46 +153,63 @@ export default function AboutPage() {
         {/* Mission Statement */}
         <Card className="glass border-gray-800 mb-16">
           <CardContent className="p-8">
-            <h2 className="text-2xl font-orbitron font-bold mb-4 gradient-text text-center">Mission Statement</h2>
+            <h2 className="text-2xl font-orbitron font-bold mb-4 gradient-text text-center">
+              Mission Statement
+            </h2>
             <p className="text-gray-300 text-center leading-relaxed text-lg">
-              DevNext exists to bridge the gap between complex technology concepts and practical understanding. Our
-              mission is to provide clear, actionable insights that help developers at all levels grow their skills and
-              stay current with the rapidly evolving tech landscape.
+              DevNext exists to bridge the gap between complex technology
+              concepts and practical understanding. Our mission is to provide
+              clear, actionable insights that help developers at all levels grow
+              their skills and stay current with the rapidly evolving tech
+              landscape.
             </p>
           </CardContent>
         </Card>
 
         {/* Skills */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-orbitron font-bold mb-8 text-center gradient-text">Technical Expertise</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {skills.map((skill) => (
-              <Card key={skill} className="glass border-gray-800 hover-glow">
-                <CardContent className="p-4 text-center">
-                  <span className="text-white font-medium">{skill}</span>
-                </CardContent>
-              </Card>
-            ))}
+        {tags && (
+          <div className="mb-16">
+            <h2 className="text-3xl font-orbitron font-bold mb-8 text-center gradient-text"></h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {tags.map((tag, i) => (
+                <Link key={i} href={`/categories/${tag.name}`}>
+                  <Card key={i} className="glass border-gray-800 hover-glow">
+                    <CardContent className="p-4 text-center">
+                      <span className="text-white font-medium">{tag.name}</span>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Passions */}
         <div className="mb-16">
-          <h2 className="text-3xl font-orbitron font-bold mb-8 text-center gradient-text">What Drives Me</h2>
+          <h2 className="text-3xl font-orbitron font-bold mb-8 text-center gradient-text">
+            What Drives Me
+          </h2>
           <div className="grid md:grid-cols-3 gap-8">
             {passions.map((passion) => {
-              const Icon = passion.icon
+              const Icon = passion.icon;
               return (
-                <Card key={passion.title} className="glass border-gray-800 hover-glow text-center">
+                <Card
+                  key={passion.title}
+                  className="glass border-gray-800 hover-glow text-center"
+                >
                   <CardContent className="p-6">
                     <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
                       <Icon className="w-8 h-8 text-white" />
                     </div>
-                    <h3 className="text-xl font-semibold mb-3 text-white">{passion.title}</h3>
-                    <p className="text-gray-300 leading-relaxed">{passion.description}</p>
+                    <h3 className="text-xl font-semibold mb-3 text-white">
+                      {passion.title}
+                    </h3>
+                    <p className="text-gray-300 leading-relaxed">
+                      {passion.description}
+                    </p>
                   </CardContent>
                 </Card>
-              )
+              );
             })}
           </div>
         </div>
@@ -168,9 +217,12 @@ export default function AboutPage() {
         {/* Contact CTA */}
         <Card className="glass border-gray-800 text-center">
           <CardContent className="p-8">
-            <h2 className="text-2xl font-orbitron font-bold mb-4 text-white">Let's Connect</h2>
+            <h2 className="text-2xl font-orbitron font-bold mb-4 text-white">
+              Let's Connect
+            </h2>
             <p className="text-gray-300 mb-6 leading-relaxed">
-              Have questions, suggestions, or just want to chat about technology? I'd love to hear from you!
+              Have questions, suggestions, or just want to chat about
+              technology? I'd love to hear from you!
             </p>
             <Button
               asChild
@@ -185,5 +237,6 @@ export default function AboutPage() {
         </Card>
       </div>
     </div>
-  )
+  );
 }
+
