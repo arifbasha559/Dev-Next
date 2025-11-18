@@ -44,7 +44,6 @@ export default function Auth({ params }) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Something went wrong");
 
-      console.log("Success:", data);
 
       if (data.data.token) {
         localStorage.setItem("token", data.data.token);

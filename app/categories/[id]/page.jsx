@@ -3,71 +3,85 @@
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Calendar, User, Grid, List, Filter } from "lucide-react"
+import { Calendar, User, Grid, List, Filter, ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { useEffect } from "react"
-
 // Mock blog posts data
 
 
 
 export default function BlogPage({ params }) {
     const [blogPosts, setBlogPosts] = useState([])
+    const [blogCat, setBlogCat] = useState([])
+    const [error, seterror] = useState(false)
     useEffect(() => {
         const fetchPosts = async () => {
             try {
                 const res = await fetch(`/api/categories/${params.id}`);
                 const data = await res.json();
+                setBlogPosts(data?.data.posts);
+                setBlogCat(data?.data.category)
                 console.log(data)
-                setBlogPosts(data.data.posts);
 
             }
             catch (err) {
                 console.error("Error fetching blog posts:", err);
-            }    
+                seterror(true)
+            }
         };
-        fetchPosts();   
+        fetchPosts();
     }, []);
-    
+
 
     const [viewMode, setViewMode] = useState("grid")
     const { id } = params;
-    if(!blogPosts.length === 0) {
+    if (!blogPosts.length === 0) {
         return (
             <div className="flex items-center justify-center min-h-screen min-w-screen py-20">
                 <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500"></div>
             </div>
         )
     }
-    if (!blogPosts.success) {
+    else if (error) {
         return (
             <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white p-4">
                 <h1 className="text-4xl font-bold mb-4">No blog posts found in {id}</h1>
                 <p className="text-gray-400">It seems there are no posts available in this category.</p>
-                <Link href="/categories" className="text-blue-500 hover:underline">Back to Categories</Link>
+                <Link href="/categories" className="text-blue-500 hover:underline mt-2">Back to Categories</Link>
             </div>
         )
     }
-    
     return (
         <div className="pt-24 pb-20 px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
                 <div className="text-center mb-12 fade-in">
+
                     <h1 className="text-4xl md:text-5xl font-orbitron font-bold mb-4 gradient-text text-glow">Tech Blog - {id}</h1>
                     <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-                        Dive deep into the world of technology, programming, and digital innovation
+                        {blogCat?.description}
                     </p>
                     <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mt-6 rounded-full"></div>
                 </div>
 
                 {/* Filters and View Toggle */}
-                <div className="flex flex-col lg:flex-row justify-end items-center mb-8 space-y-4 lg:space-y-0">
+                <div className="flex flex-col lg:flex-row justify-between items-center mb-8 space-y-4 lg:space-y-0">
                     {/* Category Filters */}
 
-
+                    <div className="">
+                        <Button
+                            variant="ghost"
+                            asChild
+                            className="text-gray-400 hover:text-white"
+                        >
+                            <Link href={'/categories'}>
+                                <ArrowLeft className="w-4 h-4 mr-2" />
+                                Back to categories
+                            </Link>
+                        </Button>
+                    </div>
                     {/* View Toggle */}
                     <div className="flex items-center space-x-2 glass rounded-lg p-1">
                         <Button
@@ -94,7 +108,7 @@ export default function BlogPage({ params }) {
                     className={`grid gap-8 ${viewMode === "grid" ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3" : "grid-cols-1"}`}
                 >
                     {blogPosts?.map((post, index) => (
-                        <Link key={post.id} href={{ pathname: `/blog/${post.id}`, query: { from: `/categories/${id}` } }}>
+                        <Link key={index} href={{ pathname: `/blog/${post.id}`, query: { from: `/categories/${id}` } }}>
                             <Card
                                 className={`glass border-gray-800 hover-glow card-enhanced cursor-pointer group h-full transition-all duration-300 stagger-fade ${viewMode === "list" ? "md:flex md:flex-row" : ""
                                     }`}
