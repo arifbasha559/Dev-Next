@@ -49,7 +49,6 @@ export default function Auth({ params }) {
       if (data.data.token) {
         localStorage.setItem("token", data.data.token);
         localStorage.setItem("username", data.data.user.username);
-        console.log(data.data.user.username);
         router.push(`/profile/${data.data.user.username}`);
       } else {
         router.push("/");

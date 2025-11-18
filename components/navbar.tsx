@@ -66,7 +66,7 @@ export default function Navbar() {
           <div className="flex items-center space-x-4">
             {/* Search */}
             <div className="relative"></div>
-            <Link href={!token ? "/auth/login/" : `/profile/${token}`}>
+            <Link href={token == "null" ? "/auth/login/" : `/profile/${token}`}>
               <Button
                 variant="ghost"
                 size="sm"
@@ -75,7 +75,7 @@ export default function Navbar() {
                 <Avatar className=" border-none">
                   <AvatarImage src={token?.profileImage || ""} />
                   <AvatarFallback className=" text-white text-lg">
-                    {token?.charAt(0).toUpperCase()}
+                    {token=="null" ? <User className="w-4 h-4" />:token?.charAt(0).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
               </Button>
