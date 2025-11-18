@@ -1,255 +1,231 @@
-# DevNext Blog - Full Stack Next.js Application
+<h1 align="center">
+ Dev-Next – Modern Full-Stack Blog Platform
+</h1>
 
-A modern, dark-themed tech blog built with Next.js 14, MongoDB, and JWT authentication.
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js-000000?&logo=nextdotjs&logoColor=white" />
+  <img src="https://img.shields.io/badge/npm-EC4B37?&logo=npm&logoColor=white" />
+  <img src="https://img.shields.io/badge/React-18A6F9?&logo=react&logoColor=white" />
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?&logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/TailwindCSS-06B6D4?&logo=tailwindcss&logoColor=white" />
+  <img src="https://img.shields.io/badge/MongoDB-4EA94B?&logo=mongodb&logoColor=white" />
+  <img src="https://img.shields.io/badge/Mongoose-880000?&logo=mongoose&logoColor=white" />
+  <img src="https://img.shields.io/badge/JWT-000000?&logo=jsonwebtokens&logoColor=white" />
+  <img src="https://img.shields.io/badge/Vercel-000000?&logo=vercel&logoColor=white" />
+  <img src="https://img.shields.io/badge/License-MIT-blue?" />
+  <img src="https://img.shields.io/badge/Status-Active-brightgreen?" />
+  <img src="https://img.shields.io/badge/Version-1.0.0-brightgreen?" />
+</p>
 
-## Features
 
-- 🎨 Modern dark theme with neon accents and glassmorphism effects
-- 📝 Full blog management system with CRUD operations
-- 🔐 JWT-based authentication for admin users
-- 📱 Fully responsive design
-- 🔍 Search and filtering functionality
-- 📊 Categories and tags management
-- 📧 Contact form with database storage
-- 🚀 Optimized for Vercel deployment
 
-## Tech Stack
 
-- **Frontend**: Next.js 14, React, TypeScript, Tailwind CSS
-- **Backend**: Next.js API Routes, MongoDB, Mongoose
-- **Authentication**: JWT (JSON Web Tokens)
-- **Database**: MongoDB
-- **Deployment**: Vercel
+  <!-- GitHub Stats -->
+  
 
-## Getting Started
+<p align="center">
+Dev-Next is a modern, full-stack blogging platform built using Next.js 14, TypeScript, TailwindCSS, and MongoDB.  
+It includes a secure admin panel, dynamic post management, categories, tags, a fully responsive UI, and SEO-friendly blog pages.
+<p>
 
-### Prerequisites
+---
 
-- Node.js 18+ 
-- MongoDB (local or MongoDB Atlas)
-- npm or yarn
+## 🚀 **Features**
 
-### Installation
+### 🖥 Frontend (Next.js 14)
 
-1. Clone the repository:
-\`\`\`bash
-git clone https://github.com/yourusername/DevNext-blog.git
-cd DevNext-blog
-\`\`\`
+- App Router architecture
+- Fully responsive UI
+- Beautiful, modern design with TailwindCSS
+- SEO-optimized pages
+- Dark mode support
+- Rich blog UI with categories, tags & filters
 
-2. Install dependencies:
-\`\`\`bash
-npm install
-\`\`\`
+### 🔐 Admin Panel
 
-3. Set up environment variables:
-\`\`\`bash
-cp .env.example .env.local
-\`\`\`
+- JWT-based authentication
+- Create, Update, Delete blog posts
+- Manage categories & tags
+- Image upload support
+- Secure protected routes
 
-Edit `.env.local` with your values:
-\`\`\`env
-MONGODB_URI=mongodb://localhost:27017/techzen-blog
-JWT_SECRET=your-super-secret-jwt-key-here
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=your-nextauth-secret-here
-\`\`\`
+### 🗄 Backend (API + Database)
 
-4. Seed the database (optional):
-\`\`\`bash
-npm run seed
-\`\`\`
+- Next.js API routes
+- MongoDB + Mongoose models
+- Fully typed with TypeScript
+- Input validation
+- Error handling middleware
 
-5. Run the development server:
-\`\`\`bash
-npm run dev
-\`\`\`
+### ⚙️ Other Major Features
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+- Dynamic routing for posts
+- Slug auto-generation
+- Contact form endpoint
+- Clean folder structure
+- Production-ready environment handling
 
-## API Endpoints
+---
 
-### Authentication
-- `POST /api/auth/login` - Admin login
-- `POST /api/auth/register` - Admin registration
+## 📦 **Tech Stack**
 
-### Posts
-- `GET /api/posts` - Get all posts (with pagination, filtering)
-- `GET /api/posts/[id]` - Get single post
-- `POST /api/posts` - Create new post (admin only)
-- `PUT /api/posts/[id]` - Update post (admin only)
-- `DELETE /api/posts/[id]` - Delete post (admin only)
+| Category   | Technology           |
+| ---------- | -------------------- |
+| Framework  | Next.js 14           |
+| Language   | TypeScript           |
+| Styling    | TailwindCSS          |
+| Database   | MongoDB (Mongoose)   |
+| Auth       | JSON Web Token (JWT) |
+| Deployment | Vercel               |
+| Icons      | Lucide Icons         |
 
-### Categories
-- `GET /api/categories` - Get all categories
-- `GET /api/categories/[id]` - Get single category with posts
-- `POST /api/categories` - Create category (admin only)
-- `PUT /api/categories/[id]` - Update category (admin only)
-- `DELETE /api/categories/[id]` - Delete category (admin only)
+---
 
-### Tags
-- `GET /api/tags` - Get all tags with post counts
+## 🔧 **Installation & Setup**
 
-### Contact
-- `POST /api/contact` - Submit contact form
-- `GET /api/contact` - Get contact messages (admin only)
+### 1️⃣ Clone the repository
 
-## API Usage Examples
+```sh
+git clone https://github.com/arifbasha559/Dev-Next.git
+cd Dev-Next
+```
 
-### Authentication
-\`\`\`javascript
-// Login
-const response = await fetch('/api/auth/login', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    email: 'admin@techzen.com',
-    password: 'admin123'
-  })
-})
+2️⃣ Install dependencies
 
-const { data } = await response.json()
-const { token, user } = data
-\`\`\`
+(Recommended: pnpm)
 
-### Creating a Post
-\`\`\`javascript
-const response = await fetch('/api/posts', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`
-  },
-  body: JSON.stringify({
-    title: 'My New Post',
-    content: '# Hello World\n\nThis is my post content.',
-    excerpt: 'A brief description of the post',
-    category: 'React',
-    tags: ['react', 'javascript'],
-    published: true
-  })
-})
-\`\`\`
+```
+pnpm install
+```
 
-### Fetching Posts
-\`\`\`javascript
-// Get all published posts
-const response = await fetch('/api/posts?published=true&page=1&limit=10')
-const { data } = await response.json()
-const { posts, pagination } = data
+---
 
-// Search posts
-const searchResponse = await fetch('/api/posts?search=react&category=Frontend')
-\`\`\`
+### 3️⃣ Create .env file
 
-### Contact Form Submission
-\`\`\`javascript
-const response = await fetch('/api/contact', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    name: 'John Doe',
-    email: 'john@example.com',
-    subject: 'Question about your blog',
-    message: 'I have a question...'
-  })
-})
-\`\`\`
+Create a file named .env in the root directory:
 
-## Database Schema
+```
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+```
 
-### Post Model
-\`\`\`typescript
+4️⃣ Run development server
+
+```
+pnpm dev
+```
+
+Your site will be available at:
+
+```
+http://localhost:3000
+```
+
+---
+
+### 🔐 Admin Login
+
+Create an admin using the API:
+
+```
+POST /api/auth/register
+```
+
+Request body:
+
+```
 {
-  title: string (required)
-  slug: string (auto-generated, unique)
-  content: string (required, Markdown)
-  excerpt: string (required)
-  author: string (default: 'Arif Basha')
-  tags: string[]
-  category: string (required)
-  image?: string
-  published: boolean (default: false)
-  createdAt: Date
-  updatedAt: Date
+  "name": "admin",
+  "username": "admin124",
+  "email": "admin@example.com",
+  "role": "admin",
+  "password": "yourpassword"
 }
-\`\`\`
+```
 
-### Category Model
-\`\`\`typescript
-{
-  name: string (required, unique)
-  slug: string (auto-generated)
-  description?: string
-  color: string (default: 'from-blue-400 to-blue-600')
-  postCount: number (auto-calculated)
-  createdAt: Date
-  updatedAt: Date
-}
-\`\`\`
+Login at:
 
-### User Model
-\`\`\`typescript
-{
-  email: string (required, unique)
-  password: string (required, hashed)
-  name: string (required)
-  role: 'admin' | 'user' (default: 'user')
-  createdAt: Date
-  updatedAt: Date
-}
-\`\`\`
+```
+/admin/login
+```
 
-### Contact Model
-\`\`\`typescript
-{
-  name: string (required)
-  email: string (required)
-  subject: string (required)
-  message: string (required)
-  status: 'unread' | 'read' | 'replied' (default: 'unread')
-  createdAt: Date
-  updatedAt: Date
-}
-\`\`\`
+---
 
-## Deployment
+### 🗃 Available API Routes
 
-### Vercel Deployment
+| Route                | Method   | Description             |
+| -------------------- | -------- | ----------------------- |
+| `/api/auth/login`    | POST     | Login user              |
+| `/api/auth/register` | POST     | Create new admin        |
+| `/api/posts`         | GET      | Fetch all posts         |
+| `/api/posts`         | POST     | Create new post         |
+| `/api/posts/[id]`    | PUT      | Update post             |
+| `/api/posts/[id]`    | DELETE   | Delete post             |
+| `/api/categories`    | GET/POST | Manage categories       |
+| `/api/contact`       | POST     | Contact form submission |
 
-1. Push your code to GitHub
-2. Connect your repository to Vercel
-3. Add environment variables in Vercel dashboard
-4. Deploy!
+---
 
-### Environment Variables for Production
-\`\`\`env
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/techzen-blog
-JWT_SECRET=your-production-jwt-secret
-NEXTAUTH_URL=https://your-domain.vercel.app
-NEXTAUTH_SECRET=your-production-nextauth-secret
-\`\`\`
+### c🖊 Creating Posts
 
-## Default Admin Credentials
+Posts support:
 
-After running the seed script:
-- **Email**: admin@techzen.com
-- **Password**: admin123
+- Markdown
 
-⚠️ **Important**: Change these credentials in production!
+- Rich text
 
-## Contributing
+- Code blocks
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+- Tags
 
-## License
+- Categories
+
+- Hero image
+
+A slug is automatically generated from the title.
+
+---
+
+### 🚀 Deployment (Vercel)
+
+1. Push the repository to GitHub
+
+2. Import it into Vercel
+
+3. Add environment variables
+
+4. Deploy
+
+Next.js automatically optimizes the app for production.
+
+---
+
+### 📌 Future Enhancements
+
+- Comment system
+
+- Image hosting (Cloudinary / UploadThing)
+
+- Notion-style editor (Editor.js / TipTap)
+
+- Multi-admin roles
+
+- Analytics dashboard
+
+---
+
+### ❤️ Contributing
+
+Contributions are welcome!
+
+## Fork the repo → create a branch → commit changes → submit a PR.
+
+📄 License
 
 This project is licensed under the MIT License.
 
-## Support
+---
 
-For support, email arifbasha559@gmail.com or create an issue on GitHub.
+<p align="center">Built with ❤️ by Arif</p>
+
